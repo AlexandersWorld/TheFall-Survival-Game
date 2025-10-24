@@ -14,6 +14,11 @@ void UStatlineComponent::TickStatStamina(const float& DeltaTime)
 	if (bIsSprinting && IsValidSprinting())
 	{
 		Stamina.TickStat(0 - (DeltaTime * SprintCostMultiplier));
+
+		if (Stamina.GetCurrent() <= 0.0f)
+		{
+			SetSprinting(false);
+		}
 		return;
 	}
 	Stamina.TickStat(DeltaTime);
@@ -33,6 +38,7 @@ UStatlineComponent::UStatlineComponent()
 void UStatlineComponent::BeginPlay()
 {
 	Super::BeginPlay();
+	OwningCharacterMovementComponent->MaxWalkSpeed = WalkSpeed;
 }
 
 void UStatlineComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)

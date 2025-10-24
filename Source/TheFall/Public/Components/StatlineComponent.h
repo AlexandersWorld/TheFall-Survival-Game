@@ -78,7 +78,7 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess="true"))
 	float JumpCost = 10.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta=(AllowPrivateAccess="true"))
-	float WalkSpeed = 125.0f;
+	float WalkSpeed = 150.0f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess="true"))
 	float SprintSpeed = 450.0f;
 
