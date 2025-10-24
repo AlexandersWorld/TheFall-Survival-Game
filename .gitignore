@@ -1,76 +1,59 @@
-# Unreal Engine build and cache directories
-Binaries
-DerivedDataCache
-Intermediate
-Saved
-.vscode
-.idea
-.vsconfig
+# Ignore build and cache directories
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+Build/
+.vscode/
+.idea/
+.vs/
 
-# Compiled source and user settings
-.sln
-.suo
-.xcodeproj
-.xcworkspace
-.opensdf
-.sdf
-.VC.db
-.VC.opendb
-.ipch
+# Ignore compiled source and user settings
+*.sln
+*.suo
+*.xcodeproj
+*.xcworkspace
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+*.ipch
 
 # Binary assets generated during packaging
-.pdb
-.obj
-.exe
-.dll
-.app
-.dSYM
-.icns
-.lib
-.exp
-.app
-.ipa
+*.pdb
+*.obj
+*.exe
+*.dll
+*.app
+*.dSYM
+*.icns
+*.lib
+*.exp
+*.ipa
 
 # Unreal local configuration files
-.log
-.tlog
-.user
-.userprefs
-.orig
-.db
-.opendb
-.dmp
+*.log
+*.tlog
+*.user
+*.userprefs
+*.orig
+*.db
+*.opendb
+*.dmp
 
 # Backup and autosave files
-_Backup
-_autosave
-.bak
-.tmp
-.old
-.orig
+*_Backup/
+*_autosave/
+*.bak
+*.tmp
+*.old
+*.orig
 
-# Build outputs
-Build
-
-# MacOS  Windows system files
+# System files
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# Unreal Engine Launcher cache
-EngineDerivedDataCache
-EngineIntermediate
-EngineSaved
-
-# Optional ignore plugins that are engine-installed only
-# PluginsIntermediate
-# PluginsBinaries
-
-# Ignore local config overrides (keep ConfigDefault files!)
+# Keep config defaults
 Config.ini
 !ConfigDefault.ini
-
-# Ignore VS Code and Rider project settings
-.vscode
-.idea
-.iml

@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "TFPlayerCharacter.h"
 #include "Engine/LocalPlayer.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -11,7 +12,6 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 
-#include "TFPlayerCharacter.h"
 
 void ATFPlayerCharacter::Move(const FInputActionValue& Value)
 {
