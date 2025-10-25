@@ -44,6 +44,9 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Input", meta = (AllowPrivateAccess = "true"))
 	UInputAction* MouseLookAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
+	UInputAction* SneakAction;
+
 #pragma endregion
 	
 protected:
@@ -56,6 +59,8 @@ protected:
 	void PlayerJump();
 	void SprintOn();
 	void SprintOff(); 
+	void SneakOn();
+	void SneakOff();
 public:
 	ATFPlayerCharacter();
 	virtual void Tick(float DeltaTime) override;

@@ -43,6 +43,16 @@ void ATFPlayerCharacter::SprintOff()
 	SetSprinting(false);
 }
 
+void ATFPlayerCharacter::SneakOn()
+{
+	SetSneaking(true);
+}
+
+void ATFPlayerCharacter::SneakOff()
+{
+	SetSneaking(false);
+}
+
 ATFPlayerCharacter::ATFPlayerCharacter()
 {
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -88,6 +98,8 @@ void ATFPlayerCharacter::SetupPlayerInputComponent(class UInputComponent* Player
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ATFPlayerCharacter::Look);
 		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Started, this, &ATFPlayerCharacter::SprintOn);
 		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &ATFPlayerCharacter::SprintOff);
+		EnhancedInputComponent->BindAction(SneakAction, ETriggerEvent::Started, this, &ATFPlayerCharacter::SneakOn);
+		EnhancedInputComponent->BindAction(SneakAction, ETriggerEvent::Completed, this, &ATFPlayerCharacter::SneakOff);
 		
 		EnhancedInputComponent->BindAction(MouseLookAction, ETriggerEvent::Triggered, this, &ATFPlayerCharacter::Look);
 	}

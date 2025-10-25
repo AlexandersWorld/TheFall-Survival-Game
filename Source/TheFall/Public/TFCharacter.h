@@ -20,6 +20,7 @@ protected:
 
 	bool CanSprint() const;
 	void SetSprinting(const bool& IsSprinting);
+	void SetSneaking(const bool& IsSneaking);
 public:
 	ATFCharacter();
 	virtual void Tick(float DeltaTime) override;
