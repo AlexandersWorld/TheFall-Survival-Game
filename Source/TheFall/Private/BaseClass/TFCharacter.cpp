@@ -7,11 +7,18 @@ ATFCharacter::ATFCharacter()
 
 	Statline = CreateDefaultSubobject<UStatlineComponent>(TEXT("Statline"));
 	Statline->SetMovementComponentRef(GetCharacterMovement());
+
+	SaveActorID = FGuid::NewGuid();
 }
 
 void ATFCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (!SaveActorID.IsValid())
+	{
+		SaveActorID = FGuid::NewGuid();
+	}
 }
 
 bool ATFCharacter::CanJump() const
@@ -48,4 +55,20 @@ void ATFCharacter::Tick(float DeltaTime)
 void ATFCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+FGuid ATFCharacter::GetActorSaveID_Implementation()
+{
+	return SaveActorID;
+}
+
+FSaveActorData ATFCharacter::GetSaveData_Implementation()
+{
+	FSaveActorData Ret;
+
+	Ret.ActorClass = this->GetClass();
+	Ret.ActorTransform = this->GetTransform();
+	Ret.WasSpawned = this->WasSpawned;
+
+	return Ret;
 }

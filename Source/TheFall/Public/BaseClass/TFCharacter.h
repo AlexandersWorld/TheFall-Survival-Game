@@ -4,15 +4,24 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Interface/SaveActorInterface.h"
 #include "TFCharacter.generated.h"
 
 UCLASS(abstract)
-class THEFALL_API ATFCharacter : public ACharacter
+class THEFALL_API ATFCharacter : public ACharacter, public ISaveActorInterface
 {
 	GENERATED_BODY()
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess="true"))
+private:
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, SaveGame, meta=(AllowPrivateAccess="true"))
 	class UStatlineComponent* Statline;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, SaveGame, meta = (AllowPrivateAccess = "true"))
+	FGuid SaveActorID;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, SaveGame, meta = (AllowPrivateAccess = "true"))
+	bool WasSpawned = false;
+
 protected:
 	virtual void BeginPlay() override;
 	bool CanJump() const;
@@ -27,4 +36,6 @@ public:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	FGuid GetActorSaveID_Implementation();
+	FSaveActorData GetSaveData_Implementation();
 };
