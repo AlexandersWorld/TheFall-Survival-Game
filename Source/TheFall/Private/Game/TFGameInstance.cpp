@@ -42,6 +42,27 @@ void UTFGameInstance::GatherActorData()
 		Ar.ArIsSaveGame = true;
 		Actor->Serialize(Ar);
 
+
+		for (auto ActorComp : Actor->GetComponents())
+		{
+			if (!ActorComp->Implements<USaveActorInterface>())
+			{
+				continue;
+			}
+			ISaveActorInterface* CompInter = Cast<ISaveActorInterface>(ActorComp);
+
+			if (CompInter == nullptr) continue;
+
+			FSaveComponentData SCD = CompInter->GetComponentSaveData_Implementation();
+			FMemoryWriter CompMemWriter(SCD.ByteData);
+			FObjectAndNameAsStringProxyArchive CAr(CompMemWriter, true);
+			CAr.ArIsSaveGame = true;
+			ActorComp->Serialize(CAr);
+			SCD.ComponentClass = ActorComp->GetClass();
+
+			SAD.ComponentData.Add(SCD);
+		}
+
 		SaveableActorData.Add(SAI, SAD);
 	}
 }
@@ -94,9 +115,36 @@ void UTFGameInstance::LoadGame()
 		Ar.ArIsSaveGame = true;
 		Actor->Serialize(Ar);
 
-		/*
-			Add Adicional Logic here for custom data
-		*/
+		for (auto ActorComp : Actor->GetComponents())
+		{
+			if (!ActorComp->Implements<USaveActorInterface>())
+			{
+				continue;
+			}
+
+			ISaveActorInterface* CompInter = Cast<ISaveActorInterface>(ActorComp);
+
+			if (CompInter == nullptr) continue;
+
+			for (auto SCD : SAD.ComponentData)
+			{
+				if (SCD.ComponentClass != ActorComp->GetClass())
+				{
+					continue;
+				}
+
+				FMemoryReader CompMemReader(SCD.ByteData);
+				FObjectAndNameAsStringProxyArchive CAr(CompMemReader, true);
+				CAr.ArIsSaveGame = true;
+				ActorComp->Serialize(CAr);
+				if (SCD.RawData.IsEmpty())
+				{
+					break;
+				}
+				CompInter->SetComponentSaveData_Implementation(SCD);
+				break;
+			}
+		}
 	}
 }
 

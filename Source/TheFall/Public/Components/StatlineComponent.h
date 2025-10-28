@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Interface/SaveActorInterface.h"
 #include "StatlineComponent.generated.h"
 
 UENUM(BlueprintType)
@@ -52,10 +53,32 @@ public:
 		PerSecondTick = NewTick;
 	}
 	float GetCurrent() const { return Current; }
+
+	FString GetSaveString()
+	{
+		FString Ret = FString::SanitizeFloat(Current);
+		Ret += "|";
+		Ret += FString::SanitizeFloat(Max);
+		Ret += "|";
+		Ret += FString::SanitizeFloat(PerSecondTick);
+
+		return Ret;
+	}
+
+	void UpdateFromSaveString(TArray<FString> Parts)
+	{
+		if (Parts.Num() != 3)
+		{
+			return;
+		}
+		Current = FCString::Atof(*Parts[0]);
+		Max = FCString::Atof(*Parts[1]);
+		PerSecondTick = FCString::Atof(*Parts[2]);
+	}
 };
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class THEFALL_API UStatlineComponent : public UActorComponent
+class THEFALL_API UStatlineComponent : public UActorComponent, public ISaveActorInterface
 {
 	GENERATED_BODY()
 
@@ -127,4 +150,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void HasJumped();
+
+	virtual FSaveComponentData GetComponentSaveData_Implementation();
+
+	virtual void SetComponentSaveData_Implementation(FSaveComponentData Data);
+
 };
