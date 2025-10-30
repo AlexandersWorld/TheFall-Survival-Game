@@ -1,5 +1,6 @@
 #include "Components/StatlineComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "TFUtils.h"
 
 void UStatlineComponent::TickStats(const float& DeltaTime)
 {
@@ -138,10 +139,52 @@ void UStatlineComponent::SetSneaking(const bool& IsSneaking)
 
 bool UStatlineComponent::CanJump()
 {
-	return Stamina.GetCurrent() >= JumpCost;
+	return Stamina.GetCurrent() >= JumpCost && OwningCharacterMovementComponent->IsMovingOnGround();
 }
 
 void UStatlineComponent::HasJumped()
 {
 	Stamina.Adjust(0 - JumpCost);
+}
+
+FSaveComponentData UStatlineComponent::GetComponentSaveData_Implementation()
+{
+	FSaveComponentData Ret;
+
+	Ret.ComponentClass = this->GetClass();
+	Ret.RawData.Add(Health.GetSaveString());
+	Ret.RawData.Add(Stamina.GetSaveString());
+	Ret.RawData.Add(Hunger.GetSaveString());
+	Ret.RawData.Add(Thirst.GetSaveString());
+
+	return Ret;
+}
+
+void UStatlineComponent::SetComponentSaveData_Implementation(FSaveComponentData Data)
+{
+	TArray<FString> Parts;
+
+	for (int i = 0; i < Data.RawData.Num(); i++)
+	{
+		Parts.Empty();
+		Parts = ChopString(Data.RawData[i], '|');
+
+		switch (i)
+		{
+		case 0: 
+			Health.UpdateFromSaveString(Parts);
+			break;
+		case 1:
+			Stamina.UpdateFromSaveString(Parts);
+			break;
+		case 2:
+			Hunger.UpdateFromSaveString(Parts);
+			break;
+		case 3:
+			Thirst.UpdateFromSaveString(Parts);
+			break;
+		default:
+			break;
+		}
+	}
 }
