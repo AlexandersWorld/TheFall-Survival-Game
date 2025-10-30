@@ -17,10 +17,6 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, SaveGame, meta=(AllowPrivateAccess="true"))
 	class UStatlineComponent* Statline;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, SaveGame, meta = (AllowPrivateAccess = "true"))
-	FGuid SaveActorID;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, SaveGame, meta = (AllowPrivateAccess = "true"))
-	bool WasSpawned = false;
 
 protected:
 	virtual void BeginPlay() override;
@@ -30,6 +26,12 @@ protected:
 	bool CanSprint() const;
 	void SetSprinting(const bool& IsSprinting);
 	void SetSneaking(const bool& IsSneaking);
+
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, SaveGame, meta = (AllowPrivateAccess = "true"))
+	FGuid SaveActorID;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, SaveGame, meta = (AllowPrivateAccess = "true"))
+	bool WasSpawned = false;
 public:
 	ATFCharacter();
 	virtual void Tick(float DeltaTime) override;
@@ -38,4 +40,5 @@ public:
 
 	FGuid GetActorSaveID_Implementation();
 	FSaveActorData GetSaveData_Implementation();
+	void SetActorGUID_Implementation(const FGuid& NewGuid);
 };

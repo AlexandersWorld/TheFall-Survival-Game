@@ -108,6 +108,8 @@ void ATFPlayerCharacter::SetupPlayerInputComponent(class UInputComponent* Player
 void ATFPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	//ATFCharacter::BeginPlay();
+	SaveActorID.Invalidate();
 }
 
 void ATFPlayerCharacter::DoMove(float Right, float Forward)

@@ -72,3 +72,13 @@ FSaveActorData ATFCharacter::GetSaveData_Implementation()
 
 	return Ret;
 }
+
+void ATFCharacter::SetActorGUID_Implementation(const FGuid& NewGuid)
+{
+	if (SaveActorID.IsValid())
+	{
+		SaveActorID.Invalidate();
+	}
+
+	SaveActorID = NewGuid;
+}
