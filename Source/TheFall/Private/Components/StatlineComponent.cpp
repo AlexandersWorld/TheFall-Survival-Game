@@ -136,7 +136,7 @@ void UStatlineComponent::SetSneaking(const bool& IsSneaking)
 	bIsSprinting = false;
 	OwningCharacterMovementComponent->MaxWalkSpeed = bIsSneaking ? SneakSpeed : WalkSpeed;
 }
-
+tatu
 bool UStatlineComponent::CanJump()
 {
 	return Stamina.GetCurrent() >= JumpCost && OwningCharacterMovementComponent->IsMovingOnGround();
